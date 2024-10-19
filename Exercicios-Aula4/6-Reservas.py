@@ -19,10 +19,46 @@
 
 
 class Quarto:
-    def __init__(self, numero, tipo, disponivel):
+    def __init__(self, numero, tipo, disponivel=True):
         self.numero = numero
         self.tipo = tipo
         self.disponivel = disponivel
+        
+    def alterar_disponibilidade (self, disponibilidade):
+        self.disponivel = disponibilidade        
     
 class Cliente:
-    def __init__(self, )
+    def __init__(self, nome):
+        self.nome = nome
+        self.reservas = []
+        
+    def reservar_quarto(self, quarto):
+        if quarto.disponivel:
+            self.reservas.append(quarto)
+            quarto.alterar_disponibilidade(False)
+            print(f'O quarto {quarto.numero} foi reservado para o cliente {self.nome}')
+        else:
+            print(f'O quarto {quarto.numero} não está disponível!')
+            
+    def cancelar_reserva(self, quarto):
+        if quarto in self.reservas:
+            self.reservas.remove(quarto)
+            quarto.alterar_disponibilidade(True)
+            print(f'A reserva do quarto {quarto.numero} foi cancelada para {self.nome}.')
+        else:
+            print(f'O quarto {quarto.numero} não está reservado para {self.nome}.')
+            
+quarto1 = Quarto(14, 'single')
+quarto2 = Quarto(15, 'duble')
+
+cliente1 = Cliente('Maria')
+
+
+cliente1.reservar_quarto(quarto1)
+cliente1.reservar_quarto(quarto2)
+
+cliente1.reservar_quarto(quarto1)
+
+cliente1.cancelar_reserva(quarto1)
+cliente1.cancelar_reserva(quarto1)
+
